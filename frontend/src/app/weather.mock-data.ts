@@ -1,16 +1,19 @@
-import { of } from 'rxjs';
-import { WeatherState } from './types';
+import { Observable, of } from 'rxjs';
+import { LocationInfo, WeatherState } from './types';
 
 /** Temporary function allowing for making the frontend visually functional before starting on backend integration */
-export function getMockData() {
-  return of(mockData);
+export function getMockData(locations: LocationInfo[]): Observable<WeatherState[]> {
+  let data = locations.map((location) => {
+    let randomIndex = Math.floor(Math.random() * mockData.length);
+    let data = mockData[randomIndex];
+    console.log(randomIndex, data);
+    return { ...location, ...mockData[randomIndex] };
+  });
+  return of(data);
 }
 
-const mockData: WeatherState[] = [
+const mockData: Omit<WeatherState, 'city' | 'state' | 'zip'>[] = [
   {
-    city: 'Dearborn',
-    zip: '48124',
-    state: 'MI',
     temperature: 100, // unit of measurement is determined by the request payload
     windSpeed: 10, // in mph
     windDirection: 25.5, // degrees
@@ -23,9 +26,6 @@ const mockData: WeatherState[] = [
     ],
   },
   {
-    city: 'Romulus',
-    zip: '48174',
-    state: 'MI',
     temperature: 102, // unit of measurement is determined by the request payload
     windSpeed: 13, // in mph
     windDirection: -25.5, // degrees

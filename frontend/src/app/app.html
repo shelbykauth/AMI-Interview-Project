@@ -1,9 +1,16 @@
 <header>Randomized Weather App</header>
-<app-add-location-form #addLocationForm />
+<form [formGroup]="formControls">
+  <label class="inline-block">City <input placeholder="City" formControlName="city" /> </label>
+  <label class="inline-block">State <input placeholder="State" formControlName="state" /> </label>
+  <label class="inline-block">Zip <input placeholder="Zip" formControlName="zip" /> </label>
+</form>
+
 <hr />
 <div>
   <button class="inline-block">Refresh</button>
-  <button class="inline-block" (click)="addLocationForm.addLocation()">Add +</button>
+  <button class="inline-block" (click)="addLocation()" [disabled]="!formControls.valid">
+    Add +
+  </button>
 </div>
 <hr />
 <div>
