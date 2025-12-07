@@ -53,15 +53,6 @@ Frontend:
   - c. both. Show how I would do it in each method.
   - d. I'm misunderstanding, and this is permitted to be built and installed on the server machine. Don't include built files, but do expect Node.js on build server
 
-# To Do
-
-- [ ] Create folders for project structure
-- [ ] Hello World for frontend and backend
-- [ ] Make sure it can run as directed
-  - [ ] I'm working on a macbook, so it should run there.
-  - [ ] Most people will use Windows, so I should test it on my Personal Computer.
-- [ ]
-
 # Idealized Features that may be over-engineered for this assessment
 
 - [ ] Use OpenStreetMap to warn on invalid city/state/zips and/or suggest valid city/state/zips
