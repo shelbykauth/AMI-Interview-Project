@@ -1,6 +1,6 @@
-using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
+
+using WeatherApp;
 
 const string CORS_ALLOW_ANY = "CORS_ALLOW_ANY";
 
@@ -22,8 +22,8 @@ builder.Services.AddCors(options =>
 });
 builder.Services.ConfigureHttpJsonOptions(options =>
 {
-   options.SerializerOptions.WriteIndented = true;
-   options.SerializerOptions.IncludeFields = true;
+    options.SerializerOptions.WriteIndented = true;
+    options.SerializerOptions.IncludeFields = true;
 });
 
 var app = builder.Build();

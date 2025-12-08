@@ -14,10 +14,10 @@ export class WeatherService {
   protected readonly httpClient = inject(HttpClient);
   getData(locationInfo: LocationInfo[]) {
     // TODO: get data from backend API
-    return this.httpClient.post<WeatherState[]>(
-      'http://localhost:5046/weatherforecast/',
-      locationInfo
-    );
+    return this.httpClient.post<WeatherState[]>('http://localhost:5046/weatherforecast/', {
+      locations: locationInfo,
+      unitofMeasurement: 'F',
+    });
     // return getMockData(locationInfo);
   }
   getAllData() {
