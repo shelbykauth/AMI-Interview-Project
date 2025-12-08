@@ -7,7 +7,7 @@
 
 <hr />
 <div>
-  <button class="inline-block">Refresh</button>
+  <button class="inline-block" (click)="refresh$.next()">Refresh</button>
   <button class="inline-block" (click)="addLocation()" [disabled]="!formControls.valid">
     Add +
   </button>
