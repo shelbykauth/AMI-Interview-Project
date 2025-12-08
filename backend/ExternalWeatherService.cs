@@ -47,7 +47,16 @@ namespace WeatherApp
       var responseA = await responseATask;
       var responseB = await responseBTask;
 
-      Console.Out.WriteLine(JsonSerializer.Serialize(responseA));
+      if (!responseA.IsSuccessStatusCode)
+      {
+        // Todo: Use ILogger, not Console.Out.WriteLine
+        Console.Out.WriteLine(JsonSerializer.Serialize(responseA));
+
+        // Todo: Do not give frontend stack traces.  Return error messages in JSON.
+        throw new Exception("External Service doesn't like that input");
+      }
+
+      // Console.Out.WriteLine(JsonSerializer.Serialize(responseA));
       responseA.EnsureSuccessStatusCode();
       responseB.EnsureSuccessStatusCode();
 
