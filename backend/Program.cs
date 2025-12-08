@@ -11,8 +11,11 @@ ExternalWeatherService externalWeatherService = new ExternalWeatherService();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
 builder.Services.AddCors(options =>
 {
+    // Non-policy.  It's not best practice, but for now, this needs to be accessible regardless of the machine name.
+    // Later on, I would add a configuration variable for allowing specific frontends.
     options.AddPolicy(name: CORS_ALLOW_ANY, policy =>
     {
         policy.AllowAnyOrigin();
@@ -37,26 +40,6 @@ if (app.Environment.IsDevelopment())
 }
 
 // app.UseHttpsRedirection();
-
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
-
-app.MapGet("/weatherforecast", () =>
-{
-    var forecast = Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast")
-.WithOpenApi();
 
 app.MapPost("/weatherforecast", async ([FromBody] GrabWeatherInfoBody body) =>
 {

@@ -8,6 +8,8 @@ namespace WeatherApp
   {
     private readonly HttpClient httpClient;
     private string accessToken = "";
+
+    // Todo: validate security token
     // private JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
     // private bool accessTokenValid {get
     //   {
