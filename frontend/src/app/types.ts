@@ -28,9 +28,6 @@ export type WeatherState = LocationInfo & {
     /** percent */
     probability: number;
   }[];
-};
-
-export type RollingWeatherSingle = LocationInfo & {
-  /** unit of measure determined by request */
   rolling12MonthTemps: number[];
+  rolling12MonthAvg?: number;
 };

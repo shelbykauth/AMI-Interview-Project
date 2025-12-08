@@ -24,6 +24,7 @@ const mockData: Omit<WeatherState, 'city' | 'state' | 'zip'>[] = [
         probability: 0.5, // percent
       },
     ],
+    rolling12MonthTemps: [],
   },
   {
     temperature: 102, // unit of measurement is determined by the request payload
@@ -36,5 +37,6 @@ const mockData: Omit<WeatherState, 'city' | 'state' | 'zip'>[] = [
         probability: 0.1, // percent
       },
     ],
+    rolling12MonthTemps: [],
   },
 ];

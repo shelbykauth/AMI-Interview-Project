@@ -1,15 +1,17 @@
 import { AsyncPipe } from '@angular/common';
 import { Component, inject, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { BehaviorSubject, Observable, of, switchMap } from 'rxjs';
+import { BehaviorSubject, Observable, of, startWith, switchMap } from 'rxjs';
 
 import { WeatherState } from './types';
 import { LocationsService } from './locations';
 import { WeatherService } from './weather';
+import { TemperatureChart } from './temperature-chart/temperature-chart';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-root',
-  imports: [AsyncPipe, ReactiveFormsModule],
+  imports: [AsyncPipe, ReactiveFormsModule, TemperatureChart],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })
@@ -20,8 +22,9 @@ export class App {
   protected readonly refresh$ = new BehaviorSubject<void>(undefined);
 
   protected readonly unitOfMeasure = 'F';
-  protected readonly weatherCities: Observable<WeatherState[]> = this.refresh$.pipe(
-    switchMap(() => this.weatherService.getAllData())
+  protected readonly weatherCities = toSignal(
+    this.refresh$.pipe(switchMap(() => this.weatherService.getAllData())),
+    { initialValue: [] }
   );
 
   protected readonly formControls: FormGroup = new FormGroup({
