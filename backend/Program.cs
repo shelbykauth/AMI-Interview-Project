@@ -1,9 +1,30 @@
+using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Cors.Infrastructure;
+using Microsoft.AspNetCore.Mvc;
+
+const string CORS_ALLOW_ANY = "CORS_ALLOW_ANY";
+
 var builder = WebApplication.CreateBuilder(args);
+ExternalWeatherService externalWeatherService = new ExternalWeatherService();
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: CORS_ALLOW_ANY, policy =>
+    {
+        policy.AllowAnyOrigin();
+        policy.AllowAnyHeader();
+        policy.AllowAnyMethod();
+    });
+});
+builder.Services.ConfigureHttpJsonOptions(options =>
+{
+   options.SerializerOptions.WriteIndented = true;
+   options.SerializerOptions.IncludeFields = true;
+});
 
 var app = builder.Build();
 
@@ -12,9 +33,10 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    app.UseCors(CORS_ALLOW_ANY);
 }
 
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection();
 
 var summaries = new[]
 {
@@ -23,7 +45,7 @@ var summaries = new[]
 
 app.MapGet("/weatherforecast", () =>
 {
-    var forecast =  Enumerable.Range(1, 5).Select(index =>
+    var forecast = Enumerable.Range(1, 5).Select(index =>
         new WeatherForecast
         (
             DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
@@ -36,9 +58,11 @@ app.MapGet("/weatherforecast", () =>
 .WithName("GetWeatherForecast")
 .WithOpenApi();
 
-app.Run();
-
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
+app.MapPost("/weatherforecast", async ([FromBody] GrabWeatherInfoBody body) =>
 {
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
+    return await externalWeatherService.GetWeatherForecasts(body);
+})
+.WithName("PostWeatherForecast")
+.WithOpenApi();
+
+app.Run();

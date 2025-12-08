@@ -1,0 +1,44 @@
+// @name AccessToken
+GET ***REMOVED***Auth/AccessToken
+
+###
+
+POST ***REMOVED***WeatherData/ByLocation
+Authorization: Bearer {{AccessToken.response.body.$.accessToken}}
+content-type: application/json
+
+{
+  "locations": [
+    {
+      "city": "Romulus",
+      "state": "MI",
+      "zip": "48174"
+    },
+    {
+      "city": "Dearborn",
+      "state": "MI",
+      "zip": "48124"
+    }
+  ]
+}
+
+
+###
+
+POST http://localhost:5046/weatherforecast/
+content-type: application/json
+
+{
+  "locations": [
+    {
+      "city": "Romulus",
+      "state": "MI",
+      "zip": "48174"
+    },
+    {
+      "city": "Dearborn",
+      "state": "MI",
+      "zip": "48124"
+    }
+  ]
+}

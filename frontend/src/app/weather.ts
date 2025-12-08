@@ -1,18 +1,24 @@
 import { inject, Injectable } from '@angular/core';
 
 import { getMockData } from './weather.mock-data';
-import { LocationInfo } from './types';
+import { LocationInfo, WeatherState } from './types';
 import { LocationsService } from './locations';
 import { switchMap } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
 })
 export class WeatherService {
   protected readonly locationsService = inject(LocationsService);
+  protected readonly httpClient = inject(HttpClient);
   getData(locationInfo: LocationInfo[]) {
     // TODO: get data from backend API
-    return getMockData(locationInfo);
+    return this.httpClient.post<WeatherState[]>(
+      'http://localhost:5046/weatherforecast/',
+      locationInfo
+    );
+    // return getMockData(locationInfo);
   }
   getAllData() {
     let locations = this.locationsService.locations$;

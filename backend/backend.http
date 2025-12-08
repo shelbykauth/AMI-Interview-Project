@@ -4,3 +4,8 @@ GET {{backend_HostAddress}}/weatherforecast/
 Accept: application/json
 
 ###
+
+POST {{backend_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
