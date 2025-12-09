@@ -1,4 +1,5 @@
 export type LocationInfo = {
+  id: string;
   city: string;
   /** 5 digit zip-code */
   zip: string;

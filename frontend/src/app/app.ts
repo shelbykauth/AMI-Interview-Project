@@ -36,4 +36,7 @@ export class App {
   addLocation() {
     this.locationService.addLocation(this.formControls.value);
   }
+  removeLocation(id: string) {
+    this.locationService.removeLocation(id);
+  }
 }

@@ -12,7 +12,7 @@ export function getMockData(locations: LocationInfo[]): Observable<WeatherState[
   return of(data);
 }
 
-const mockData: Omit<WeatherState, 'city' | 'state' | 'zip'>[] = [
+const mockData: Omit<WeatherState, 'id' | 'city' | 'state' | 'zip'>[] = [
   {
     temperature: 100, // unit of measurement is determined by the request payload
     windSpeed: 10, // in mph

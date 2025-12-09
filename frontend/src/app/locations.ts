@@ -1,7 +1,22 @@
 import { Injectable } from '@angular/core';
 
 import { LocationInfo } from './types';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, buffer } from 'rxjs';
+
+export async function calculateId(info: LocationInfo) {
+  let infoString = `${info.city}_${info.state}_${info.zip}`.toLowerCase().replaceAll(/\W/g, '');
+  return infoString;
+  // // Todo: Determine if the following is useful.
+  // try {
+  //   let buffer = new TextEncoder().encode(infoString);
+  //   let digest = await crypto.subtle.digest('SHA-256', buffer);
+  //   const resultBytes = [...new Uint8Array(digest)];
+  //   return resultBytes.map((x) => x.toString(16).padStart(2, '0')).join('');
+  // } catch (err) {
+  //   console.error(err);
+  //   return infoString;
+  // }
+}
 
 @Injectable({
   providedIn: 'root',
@@ -16,14 +31,25 @@ export class LocationsService {
     this._getStoredLocations();
   }
 
-  addLocation(info: LocationInfo) {
+  async addLocation(info: LocationInfo) {
+    info.id = await calculateId(info);
     let list = this._locations$.value;
+    if (list.some((item) => item.id === info.id)) {
+      throw new Error('Cannot add the same Location twice.');
+    }
     list.push(info);
+    this._saveStoredLocations(list);
+  }
+  removeLocation(id: string) {
+    let list = this._locations$.value.filter((item) => item.id !== id);
     this._saveStoredLocations(list);
   }
 
   private _verifyIsLocation(info: LocationInfo | any) {
     if (!info) {
+      return false;
+    }
+    if (!info.id) {
       return false;
     }
     if (!info.city) {

@@ -13,33 +13,36 @@
   </button>
 </div>
 <hr />
-<div>
-  @for (weatherState of weatherCities(); track weatherState) {
-  <div class="card rounded-2xl border-2 m-1">
-    <div class="inline-block px-3">
-      <b class="bold">City</b>
-      {{ weatherState.city }}
-    </div>
-    <div class="inline-block px-3">
-      <b class="bold">Zip</b>
-      {{ weatherState.zip }}
-    </div>
-    <div class="inline-block px-3">
-      <b class="bold">Temp</b>
-      {{ weatherState.temperature }} °{{ unitOfMeasure }}
-    </div>
-    <div class="inline-block px-3">
-      <b class="bold">Cloud Coverage</b>
-      {{ weatherState.cloudCoverage }} %
-    </div>
-    <div class="inline-block px-3">
-      <b class="bold">Wind Direction</b>
-      {{ weatherState.windSpeed }} mph @ {{ weatherState.windDirection }}°
-    </div>
-    <div class="inline-block px-3">
-      <b class="bold">12 month avg</b>
-      {{ weatherState.rolling12MonthAvg }} °{{ unitOfMeasure }}
-    </div>
+<div class="flex flex-wrap">
+  @for (card of weatherCities(); track card) {
+  <div class="card relative rounded-2xl border-2 m-1 p-2 w-sm">
+    <button class="w-2 h-2 absolute right-2 top-0" (click)="removeLocation(card.id)">X</button>
+    <table class="w-full">
+      <tr>
+        <th class="text-right w-[9em] max-w-[40vw]">City</th>
+        <td class="px-4">{{ card.city }}, {{ card.state }}</td>
+      </tr>
+      <tr>
+        <th class="text-right w-[9em] max-w-[40vw]">Zip</th>
+        <td class="px-4">{{ card.zip }}</td>
+      </tr>
+      <tr>
+        <th class="text-right w-[9em] max-w-[40vw]">Temp</th>
+        <td class="px-4">{{ card.temperature }} °{{ unitOfMeasure }}</td>
+      </tr>
+      <tr>
+        <th class="text-right w-[9em] max-w-[40vw]">Cloud Coverage</th>
+        <td class="px-4">{{ card.cloudCoverage }} %</td>
+      </tr>
+      <tr>
+        <th class="text-right w-[9em] max-w-[40vw]">Wind</th>
+        <td class="px-4">{{ card.windSpeed }} mph @ {{ card.windDirection }}°</td>
+      </tr>
+      <tr>
+        <th class="text-right w-[9em] max-w-[40vw]">12 month avg</th>
+        <td class="px-4">{{ card.rolling12MonthAvg }} °{{ unitOfMeasure }}</td>
+      </tr>
+    </table>
   </div>
   }
 </div>
