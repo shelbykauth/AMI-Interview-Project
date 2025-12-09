@@ -1,0 +1,32 @@
+@let info = weatherState(); @if (info) {
+
+<button class="w-2 h-2 absolute right-2 top-0" (click)="locationsService.removeLocation(info.id)">
+  X
+</button>
+<table class="w-full">
+  <tr>
+    <th class="text-right w-[9em] max-w-[40vw]">City</th>
+    <td class="px-4">{{ info.city }}, {{ info.state }}</td>
+  </tr>
+  <tr>
+    <th class="text-right w-[9em] max-w-[40vw]">Zip</th>
+    <td class="px-4">{{ info.zip }}</td>
+  </tr>
+  <tr>
+    <th class="text-right w-[9em] max-w-[40vw]">Temp</th>
+    <td class="px-4">{{ info.temperature }} °{{ unitOfMeasure() }}</td>
+  </tr>
+  <tr>
+    <th class="text-right w-[9em] max-w-[40vw]">Cloud Coverage</th>
+    <td class="px-4">{{ info.cloudCoverage }} %</td>
+  </tr>
+  <tr>
+    <th class="text-right w-[9em] max-w-[40vw]">Wind</th>
+    <td class="px-4">{{ info.windSpeed }} mph @ {{ info.windDirection }}°</td>
+  </tr>
+  <tr>
+    <th class="text-right w-[9em] max-w-[40vw]">12 month avg</th>
+    <td class="px-4">{{ info.rolling12MonthAvg }} °{{ unitOfMeasure() }}</td>
+  </tr>
+</table>
+}

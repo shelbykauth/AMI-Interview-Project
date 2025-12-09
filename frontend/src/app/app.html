@@ -34,35 +34,7 @@
 <hr />
 <div class="flex flex-wrap m-6 justify-center">
   @for (card of weatherCities(); track card.id) {
-  <div class="card relative rounded-2xl border-2 m-1 p-2 w-sm">
-    <button class="w-2 h-2 absolute right-2 top-0" (click)="removeLocation(card.id)">X</button>
-    <table class="w-full">
-      <tr>
-        <th class="text-right w-[9em] max-w-[40vw]">City</th>
-        <td class="px-4">{{ card.city }}, {{ card.state }}</td>
-      </tr>
-      <tr>
-        <th class="text-right w-[9em] max-w-[40vw]">Zip</th>
-        <td class="px-4">{{ card.zip }}</td>
-      </tr>
-      <tr>
-        <th class="text-right w-[9em] max-w-[40vw]">Temp</th>
-        <td class="px-4">{{ card.temperature }} °{{ unitOfMeasure }}</td>
-      </tr>
-      <tr>
-        <th class="text-right w-[9em] max-w-[40vw]">Cloud Coverage</th>
-        <td class="px-4">{{ card.cloudCoverage }} %</td>
-      </tr>
-      <tr>
-        <th class="text-right w-[9em] max-w-[40vw]">Wind</th>
-        <td class="px-4">{{ card.windSpeed }} mph @ {{ card.windDirection }}°</td>
-      </tr>
-      <tr>
-        <th class="text-right w-[9em] max-w-[40vw]">12 month avg</th>
-        <td class="px-4">{{ card.rolling12MonthAvg }} °{{ unitOfMeasure }}</td>
-      </tr>
-    </table>
-  </div>
+  <div app-weather-card [weatherState]="card"></div>
   }
   <div class="mx-1 w-sm"></div>
   <div class="mx-1 w-sm"></div>

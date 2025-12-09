@@ -8,10 +8,11 @@ import { LocationsService } from './locations';
 import { WeatherService } from './weather';
 import { TemperatureChartDirective } from './temperature-chart';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { WeatherCard } from './weather-card/weather-card';
 
 @Component({
   selector: 'app-root',
-  imports: [ReactiveFormsModule, TemperatureChartDirective],
+  imports: [ReactiveFormsModule, TemperatureChartDirective, WeatherCard],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })
