@@ -5,6 +5,7 @@ namespace WeatherApp
 {
   public record LocationInfo()
   {
+    public string id { get; init; }
     public required string city { get; init; }
     public required string state { get; init; }
     public required string zip { get; init; }
@@ -45,23 +46,46 @@ namespace WeatherApp
   public record WeatherForecastSingle : WeatherForecastResponsePartA
   {
     public required float[] rolling12MonthTemps { get; init; }
+    public required string status { get; init; }
 
     public static WeatherForecastSingle Merge(
+      LocationInfo info,
       WeatherForecastResponsePartA partA,
-      WeatherForecastResponsePartB partB
+      WeatherForecastResponsePartB partB,
+      string status = "success"
     )
     {
       return new WeatherForecastSingle()
       {
-        city = partA.city,
-        state = partA.state,
-        zip = partA.zip,
+        id = info.id,
+        city = info.city,
+        state = info.state,
+        zip = info.zip,
+        status = status,
         temperature = partA.temperature,
         windSpeed = partA.windSpeed,
         windDirection = partA.windDirection,
         cloudCoverage = partA.cloudCoverage,
         precipitation = partA.precipitation,
         rolling12MonthTemps = partB.rolling12MonthTemps,
+      };
+    }
+
+    public static WeatherForecastSingle Failure(LocationInfo info)
+    {
+      return new WeatherForecastSingle()
+      {
+        id = info.id,
+        city = info.city,
+        state = info.state,
+        zip = info.zip,
+        status = "error",
+        temperature = -999,
+        windSpeed = -999,
+        windDirection = -999,
+        cloudCoverage = -999,
+        precipitation = [],
+        rolling12MonthTemps = [],
       };
     }
   }

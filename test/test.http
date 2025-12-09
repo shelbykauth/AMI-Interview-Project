@@ -31,11 +31,13 @@ content-type: application/json
 {
   "locations": [
     {
-      "city": "Romulus",
+      "id": "rm48174",
+      "city": "Romuluss",
       "state": "MI",
       "zip": "48174"
     },
     {
+      "id": "dmi48124",
       "city": "Dearborn",
       "state": "MI",
       "zip": "48124"
