@@ -63,18 +63,30 @@ export class TemperatureChartDirective {
         labels: this.monthLabels,
         datasets: [],
       },
+      options: {
+        plugins: {
+          colors: {
+            forceOverride: true,
+          },
+        },
+      },
     });
   }
 
-  populateChart(chart: Chart, inputData: WeatherState[]) {
-    const chartData: ChartDataset<'line'>[] = inputData.map((item) => ({
-      label: item.city + ', ' + item.state,
-      data: item.rolling12MonthTemps,
-    }));
+  populateChart(chart: Chart<'line'>, inputData: WeatherState[]) {
+    const chartData: ChartDataset<'line'>[] = inputData.map((item, index) => {
+      let label = item.city + ', ' + item.state;
+      let newSet = chart.data.datasets.find((set) => set.label === label) ?? {
+        label: item.city + ', ' + item.state,
+        data: item.rolling12MonthTemps,
+      };
+      newSet.label = item.city + ', ' + item.state;
+      newSet.data = item.rolling12MonthTemps;
+      return newSet;
+    });
     const averageData: ChartDataset<'line'>[] = inputData.map((item) => ({
       label: item.city + ', ' + item.state + ' avg',
       data: [item.rolling12MonthAvg!],
-      // backgroundColor: Colors.beforeLayout()
     }));
 
     chart.data.datasets = chartData;
