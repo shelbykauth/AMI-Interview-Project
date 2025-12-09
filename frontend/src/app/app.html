@@ -33,7 +33,7 @@
 </div>
 <hr />
 <div class="flex flex-wrap m-6 justify-center">
-  @for (card of weatherCities(); track card) {
+  @for (card of weatherCities(); track card.id) {
   <div class="card relative rounded-2xl border-2 m-1 p-2 w-sm">
     <button class="w-2 h-2 absolute right-2 top-0" (click)="removeLocation(card.id)">X</button>
     <table class="w-full">
