@@ -1,4 +1,4 @@
-import { Component, computed, ElementRef, input, viewChild, ViewChild } from '@angular/core';
+import { computed, Directive, effect, ElementRef, inject, input, viewChild } from '@angular/core';
 import {
   LineController,
   Chart,
@@ -10,7 +10,8 @@ import {
   PointElement,
   ChartDataset,
 } from 'chart.js';
-import { WeatherState } from '../types';
+
+import { WeatherState } from './types';
 
 Chart.register(
   Colors,
@@ -22,42 +23,34 @@ Chart.register(
   PointElement
 );
 
-@Component({
-  selector: 'app-temperature-chart',
-  imports: [],
-  templateUrl: './temperature-chart.html',
-  styleUrl: './temperature-chart.css',
+export function getMonthLabels() {
+  let months: string[] = [];
+  let date = new Date();
+  for (let i = 0; i < 12; i++) {
+    date.setMonth(date.getMonth() - 1);
+    months.unshift(date.toLocaleString('en', { month: 'short' }));
+  }
+  return months;
+}
+
+@Directive({
+  selector: 'canvas[appTemperatureChartData]',
 })
-export class TemperatureChart {
-  // @ViewChild('canvasRef') canvasRef!: ElementRef<HTMLCanvasElement>;
-  canvasRef = viewChild.required<ElementRef<HTMLCanvasElement>>('canvasRef');
-  weatherData = input<WeatherState[]>([]);
-  readonly monthLabels = this.getMonthLabels();
+export class TemperatureChartDirective {
+  canvasRef: ElementRef<HTMLCanvasElement> = inject(ElementRef);
+  weatherData = input<WeatherState[]>([], { alias: 'appTemperatureChartData' });
+  readonly monthLabels = getMonthLabels();
 
   chart = computed(() => {
-    const canvas = this.canvasRef().nativeElement;
+    const canvas = this.canvasRef.nativeElement;
     return this.buildChart(canvas);
   });
 
-  populated = computed(() => {
+  populated = effect(() => {
     let chart = this.chart();
     let data = this.weatherData();
     this.populateChart(chart, data);
   });
-
-  ngOnInit() {
-    // this.populated();
-  }
-
-  getMonthLabels() {
-    let months: string[] = [];
-    let date = new Date();
-    for (let i = 0; i < 12; i++) {
-      date.setMonth(date.getMonth() - 1);
-      months.unshift(date.toLocaleString('en', { month: 'short' }));
-    }
-    return months;
-  }
 
   buildChart(canvas: HTMLCanvasElement) {
     const ctx = canvas.getContext('2d');

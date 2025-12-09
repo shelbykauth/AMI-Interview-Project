@@ -6,12 +6,12 @@ import { BehaviorSubject, Observable, of, startWith, switchMap } from 'rxjs';
 import { WeatherState } from './types';
 import { LocationsService } from './locations';
 import { WeatherService } from './weather';
-import { TemperatureChart } from './temperature-chart/temperature-chart';
+import { TemperatureChartDirective } from './temperature-chart';
 import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-root',
-  imports: [AsyncPipe, ReactiveFormsModule, TemperatureChart],
+  imports: [ReactiveFormsModule, TemperatureChartDirective],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })
