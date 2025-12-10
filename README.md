@@ -36,6 +36,13 @@ How to launch and hot-reload the application on a workstation during development
 - Run `npm start`
 - After frontend and backend is spun up, open `http://localhost:4200`
 
+### Troubleshooting:
+- frontend: `The Angular CLI requires a minimum Node.js version of ...`
+  - Update Node.js
+- backend: `backend\backend.csproj : error NU1100: Unable to resolve 'Microsoft.AspNetCore.OpenApi (>= 10.0.1)' for 'net10.0'.`
+  - You probably don't have nuget sources installed.  (Verify with `dotnet nuget list source`).
+  - Run `dotnet nuget add source "https://api.nuget.org/v3/index.json" --name "nuget.org"`
+
 ## Deployment Overview
 
 Overview for how one would deploy the project using CI/CD or Manual processes.
