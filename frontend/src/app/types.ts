@@ -15,6 +15,7 @@ export type WeatherRequest = {
 };
 
 export type WeatherState = LocationInfo & {
+  status: 'success' | 'loading' | 'error';
   /** Unit of measure determined by request */
   temperature: number;
   /** miles per hour */

@@ -70,6 +70,9 @@ namespace WeatherApp
 
         // todo: verify that the two sets of Weather Data match up for sure.
         var data = requestBody.locations.Select((location, index) => WeatherForecastSingle.Merge(location, weatherDataA[index], weatherDataB[index])).ToArray();
+
+        // todo: turn on and off artificial delays via config or other way that doesn't involve rebuilding
+        // await Task.Delay(10000);
         return data;
       }
       catch (Exception err)

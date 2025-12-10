@@ -1,10 +1,11 @@
 import { Component, inject, input } from '@angular/core';
 import { WeatherState } from '../types';
 import { LocationsService } from '../locations';
+import { SkeletonLoader } from '../skeleton-loader';
 
 @Component({
   selector: 'div[app-weather-card]',
-  imports: [],
+  imports: [SkeletonLoader],
   templateUrl: './weather-card.html',
   styleUrl: './weather-card.css',
   host: {
