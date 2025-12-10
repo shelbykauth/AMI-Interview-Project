@@ -1,22 +1,26 @@
 <header class="text-3xl m-3">Randomized Weather App</header>
 <hr />
 <form class="m-6" [formGroup]="formControls">
+  <label><span class="text-red-800">*</span> <span class="text-xs"> Required Field</span></label>
   <label class="block">
-    <span class="inline-block w-16">City</span>
+    <span class="inline-block w-16">City <span class="text-red-800">*</span></span>
     <input id="city" class="border-b border-gray-400" placeholder="City" formControlName="city" />
+    <span class="text-red-800">{{ formErrorMesages().city }} </span>
   </label>
   <label class="block">
-    <span class="inline-block w-16">State</span>
+    <span class="inline-block w-16">State <span class="text-red-800">*</span></span>
     <input
       id="state"
       class="border-b border-gray-400"
       placeholder="State"
       formControlName="state"
     />
+    <span class="text-red-800">{{ formErrorMesages().state }} </span>
   </label>
   <label class="block">
-    <span class="inline-block w-16">Zip</span>
+    <span class="inline-block w-16">Zip <span class="text-red-800">*</span></span>
     <input id="zip" class="border-b border-gray-400" placeholder="Zip" formControlName="zip" />
+    <span class="text-red-800">{{ formErrorMesages().zip }} </span>
   </label>
 </form>
 

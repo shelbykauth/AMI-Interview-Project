@@ -1,9 +1,9 @@
 import { AsyncPipe } from '@angular/common';
-import { Component, inject, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { BehaviorSubject, Observable, of, startWith, switchMap } from 'rxjs';
+import { BehaviorSubject, Observable, of, startWith, switchMap, tap } from 'rxjs';
 
-import { WeatherState } from './types';
+import { LocationInfo, WeatherState } from './types';
 import { LocationsService } from './locations';
 import { WeatherService } from './weather';
 import { TemperatureChartDirective } from './temperature-chart';
@@ -28,14 +28,63 @@ export class App {
     { initialValue: [] }
   );
 
-  protected readonly formControls: FormGroup = new FormGroup({
-    city: new FormControl('', [Validators.required]),
-    state: new FormControl('', [Validators.required]),
-    zip: new FormControl('', [Validators.required]),
+  protected readonly formControls = new FormGroup({
+    id: new FormControl('', { nonNullable: true }),
+    city: new FormControl('', {
+      nonNullable: true,
+      validators: [Validators.required, Validators.pattern(/[a-zA-z]+/)],
+    }),
+    state: new FormControl('', {
+      nonNullable: true,
+      validators: [Validators.required, Validators.pattern(/^[a-zA-Z]{2}$/)],
+    }),
+    zip: new FormControl('', {
+      nonNullable: true,
+      validators: [Validators.required, Validators.pattern(/^[0-9]{5}$/)],
+    }),
+  });
+
+  protected readonly formValueChanges = toSignal(this.formControls.valueChanges);
+
+  protected readonly formErrorMesages = computed(() => {
+    this.formValueChanges();
+    let cityErrors = this.formControls.controls.city.errors;
+    let stateErrors = this.formControls.controls.state.errors;
+    let zipErrors = this.formControls.controls.zip.errors;
+
+    let errorMessages = {
+      city: '',
+      state: '',
+      zip: '',
+    };
+    if (cityErrors && this.formControls.controls.city.dirty) {
+      if (cityErrors['required']) {
+        errorMessages.city = 'Error: Required';
+      } else if (cityErrors['pattern']) {
+        errorMessages.city = 'Error: Text must not be empty';
+      }
+    }
+    if (stateErrors && this.formControls.controls.state.dirty) {
+      if (stateErrors['required']) {
+        errorMessages.state = 'Error: Required';
+      } else if (stateErrors['pattern']) {
+        errorMessages.state = 'Error: State must be the 2-letter state code, eg: "MI"';
+      }
+    }
+    if (zipErrors && this.formControls.controls.zip.dirty) {
+      if (zipErrors['required']) {
+        errorMessages.zip = 'Error: Required';
+      } else if (zipErrors['pattern']) {
+        errorMessages.zip = 'Error: Zip must be the 5-digit zip code, eg: "48124"';
+      }
+    }
+
+    return errorMessages;
   });
 
   addLocation() {
-    this.locationService.addLocation(this.formControls.value);
+    this.locationService.addLocation(this.formControls.getRawValue());
+    this.formControls.reset();
   }
   removeLocation(id: string) {
     this.locationService.removeLocation(id);
