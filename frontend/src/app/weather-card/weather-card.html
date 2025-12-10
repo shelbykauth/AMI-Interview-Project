@@ -12,6 +12,23 @@
     <th class="text-right w-[9em] max-w-[40vw]">Zip</th>
     <td class="px-4">{{ info.zip }}</td>
   </tr>
+  @if (info.status === 'error') {
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td colspan="2" class="text-center">
+      <span class="text-red-800 bold text-2xl">Error Retrieving Data</span>
+    </td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  } @else {
+
   <tr>
     <th class="text-right w-[9em] max-w-[40vw]">Temp</th>
     <td class="px-4">
@@ -44,5 +61,6 @@
       </span>
     </td>
   </tr>
+  }
 </table>
 }

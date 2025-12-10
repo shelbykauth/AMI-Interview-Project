@@ -79,6 +79,7 @@ export class TemperatureChartDirective {
       let newSet = chart.data.datasets.find((set) => set.label === label) ?? {
         label: item.city + ', ' + item.state,
         data: item.rolling12MonthTemps,
+        hidden: item.status === 'error',
       };
       newSet.label = item.city + ', ' + item.state;
       newSet.data = item.rolling12MonthTemps;
@@ -92,6 +93,12 @@ export class TemperatureChartDirective {
     chart.data.datasets = chartData;
     chart.resize();
     chart.update();
+
+    inputData.forEach((item, index) => {
+      if (item.status === 'error') {
+        chart.hide(index);
+      }
+    });
     console.log(chart);
   }
 }
