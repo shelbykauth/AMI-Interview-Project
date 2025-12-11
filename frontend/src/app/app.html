@@ -6,22 +6,45 @@
   >
   <label class="block">
     <span class="inline-block w-16">City <span class="text-red-800">*</span></span>
-    <input id="city" class="border-b border-gray-400" placeholder="City" formControlName="city" />
+    <input
+      id="city"
+      class="border-b border-gray-400 placeholder-gray-500 px-1"
+      placeholder="City"
+      formControlName="city"
+    />
+    <br />
     <span class="text-red-800">{{ formErrorMesages().city }} </span>
   </label>
   <label class="block">
     <span class="inline-block w-16">State <span class="text-red-800">*</span></span>
-    <input
+    <!-- <input
       id="state"
       class="border-b border-gray-400"
       placeholder="State"
       formControlName="state"
-    />
+    /> -->
+    <select
+      class="border-b border-gray-400"
+      [class.text-gray-500]="formControls.controls.state.invalid"
+      formControlName="state"
+    >
+      <option disabled selected value="">Select a State</option>
+      @for (state of locationService.states; track state) {
+      <option [value]="state">{{ state }}</option>
+      }
+    </select>
+    <br />
     <span class="text-red-800">{{ formErrorMesages().state }} </span>
   </label>
   <label class="block">
     <span class="inline-block w-16">Zip <span class="text-red-800">*</span></span>
-    <input id="zip" class="border-b border-gray-400" placeholder="Zip" formControlName="zip" />
+    <input
+      id="zip"
+      class="border-b border-gray-400 placeholder-gray-500 px-1"
+      placeholder="Zip"
+      formControlName="zip"
+    />
+    <br />
     <span class="text-red-800">{{ formErrorMesages().zip }} </span>
   </label>
 </form>

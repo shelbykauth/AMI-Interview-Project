@@ -74,21 +74,21 @@ export class App {
       state: '',
       zip: '',
     };
-    if (cityErrors && this.formControls.controls.city.dirty) {
+    if (cityErrors && this.formControls.controls.city.touched) {
       if (cityErrors['required']) {
         errorMessages.city = 'Error: Required';
       } else if (cityErrors['pattern']) {
         errorMessages.city = 'Error: Text must not be empty';
       }
     }
-    if (stateErrors && this.formControls.controls.state.dirty) {
+    if (stateErrors && this.formControls.controls.state.touched) {
       if (stateErrors['required']) {
         errorMessages.state = 'Error: Required';
       } else if (stateErrors['pattern']) {
         errorMessages.state = 'Error: State must be the 2-letter state code, eg: "MI"';
       }
     }
-    if (zipErrors && this.formControls.controls.zip.dirty) {
+    if (zipErrors && this.formControls.controls.zip.touched) {
       if (zipErrors['required']) {
         errorMessages.zip = 'Error: Required';
       } else if (zipErrors['pattern']) {
