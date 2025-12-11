@@ -29,6 +29,19 @@ builder.Services.ConfigureHttpJsonOptions(options =>
     options.SerializerOptions.IncludeFields = true;
 });
 
+// // This isn't working.
+// // Todo: add Rate Limiting
+// builder.Services.AddRateLimiter(options =>
+// {
+//     options.AddFixedWindowLimiter("fixed", opt =>
+//     {
+//         opt.PermitLimit = 4;
+//         opt.Window = TimeSpan.FromSeconds(12);
+//         opt.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
+//         opt.QueueLimit = 2;
+//     });
+// });
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
