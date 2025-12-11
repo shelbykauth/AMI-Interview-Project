@@ -1,7 +1,9 @@
-<header class="text-3xl m-3">Randomized Weather App</header>
+<header class="text-3xl m-3 text-center">Randomized Weather App</header>
 <hr />
-<form class="m-6" [formGroup]="formControls">
-  <label><span class="text-red-800">*</span> <span class="text-xs"> Required Field</span></label>
+<form class="m-6 mx-auto w-max" [formGroup]="formControls">
+  <label class="block"
+    ><span class="text-red-800">*</span> <span class="text-xs"> Required Field</span></label
+  >
   <label class="block">
     <span class="inline-block w-16">City <span class="text-red-800">*</span></span>
     <input id="city" class="border-b border-gray-400" placeholder="City" formControlName="city" />
@@ -25,7 +27,7 @@
 </form>
 
 <hr />
-<div class="flex flex-wrap m-6">
+<div class="flex flex-wrap m-6 justify-center">
   <button class="inline-block rounded-lg p-3 border mx-3" (click)="refresh$.next()">Refresh</button>
   <button
     class="inline-block rounded-lg p-3 border mx-3"
