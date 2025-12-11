@@ -31,7 +31,7 @@ export class WeatherService {
   protected readonly httpClient = inject(HttpClient);
   getData(locationInfo: LocationInfo[]) {
     return this.httpClient
-      .post<WeatherState[]>('http://localhost:5046/weatherforecast/', {
+      .post<WeatherState[]>('/api/weatherforecast/', {
         locations: locationInfo,
         unitofMeasurement: 'F',
       })

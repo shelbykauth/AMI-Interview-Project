@@ -1,0 +1,12 @@
+{
+  "/api/**": {
+    "target": "http://localhost:5046/",
+    "secure": "false",
+    "pathRewrite": { "^/api": "" }
+  },
+  "/weather/api/**": {
+    "target": "http://localhost:5046/",
+    "secure": "false",
+    "pathRewrite": { "^/weather/api": "" }
+  }
+}

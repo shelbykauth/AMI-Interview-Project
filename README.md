@@ -32,15 +32,20 @@ How to launch and hot-reload the application on a workstation during development
 
 - In a CLI window, navigate to the `frontend` folder.
 - Run `npm install` (at least the first time)
-- _(Write .env file with appropriate API url.)_
 - Run `npm start`
-- After frontend and backend is spun up, open `http://localhost:4200`
+- After frontend and backend is spun up, open http://localhost:4200
+- For testing on other machines (such as your phone) on the same LAN, use `npm start -- --host <host> -c=proxyApi`
+  - `<host>` should be the hostname of your computer (eg your computer name, you can find this by running `hostname`). Note: for MacOS, it should be `<hostname>.local`, eg `shelbyworkstation01.local`
+  - `-c=proxyApi` activates the proxy to the backend, so the client machine doesn't need to know.
+  - Instead of http://localhost:4200, go to `http://<host>.local:4200`
+  - This setup is specific to running the Angular dev server with `npm start`. The proxy config does not apply to the built production application. It also should be used somewhat sparingly.
 
 ### Troubleshooting:
+
 - frontend: `The Angular CLI requires a minimum Node.js version of ...`
   - Update Node.js
 - backend: `backend\backend.csproj : error NU1100: Unable to resolve 'Microsoft.AspNetCore.OpenApi (>= 10.0.1)' for 'net10.0'.`
-  - You probably don't have nuget sources installed.  (Verify with `dotnet nuget list source`).
+  - You probably don't have nuget sources installed. (Verify with `dotnet nuget list source`).
   - Run `dotnet nuget add source "https://api.nuget.org/v3/index.json" --name "nuget.org"`
 
 ## Deployment Overview
