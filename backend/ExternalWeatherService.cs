@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Configuration;
 using System.ComponentModel.DataAnnotations;
 using System.Net.Http.Headers;
 using System.Text.Json;
@@ -6,6 +7,7 @@ namespace WeatherApp
 {
   public class ExternalWeatherService
   {
+    private readonly IConfiguration Configuration;
     private readonly HttpClient httpClient;
     private string accessToken = "";
 
@@ -17,10 +19,14 @@ namespace WeatherApp
     //   }
     // }
 
-    public ExternalWeatherService()
+    public ExternalWeatherService(IConfiguration configuration)
     {
+      Configuration = configuration;
+      var domain = Configuration["ExternalService:Domain"];
+      var baseAddress = $"https://{domain}/WeatherData";
+      Console.Out.WriteLine(baseAddress);
       httpClient = new HttpClient();
-      httpClient.BaseAddress = new Uri("***REMOVED***WeatherData");
+      httpClient.BaseAddress = new Uri($"https://{domain}/WeatherData");
     }
 
 

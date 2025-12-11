@@ -25,6 +25,7 @@ How to launch and hot-reload the application on a workstation during development
 
 - In a CLI window, navigate to the `backend` folder.
 - _(in a full application, you would store the base URL and API key for the external service in one of the many configuration locations for dotnet. Such as `dotnet user-secrets set "EXTERNAL_URL" "<url>"`, but for this case, the configuration is non-sensitive and static)_
+- Run `dotnet user-secrets set "ExternalService:Domain" "<secret>"` (secret in email)
 - Run `dotnet run` (to run once, or if you want to rebuild when you make changes, run `dotnet watch` instead)
 - You can test that the backend is working by going to http://localhost:5046/swagger/index.html, (or `<specified_domain>/swagger/index.html`, where specified_domain is the protocol, hostname, and port if you're accessing from a separate machine)
 

@@ -1,11 +1,20 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 
 using WeatherApp;
 
 const string CORS_ALLOW_ANY = "CORS_ALLOW_ANY";
 
 var builder = WebApplication.CreateBuilder(args);
-ExternalWeatherService externalWeatherService = new ExternalWeatherService();
+IHostEnvironment env = builder.Environment;
+
+var configuration = new ConfigurationBuilder()
+    .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+    .AddJsonFile($"appsettings.{env.EnvironmentName}.json", true, true)
+    .AddUserSecrets<Program>()
+    .Build();
+
+ExternalWeatherService externalWeatherService = new ExternalWeatherService(configuration);
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

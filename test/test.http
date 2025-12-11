@@ -1,9 +1,12 @@
+// @prompt externalService
+
 // @name AccessToken
-GET ***REMOVED***Auth/AccessToken
+GET https://{{externalService}}/Auth/AccessToken
 
 ###
 
-POST ***REMOVED***WeatherData/ByLocation
+// @prompt externalService
+POST https://{{externalService}}/WeatherData/ByLocation
 Authorization: Bearer {{AccessToken.response.body.$.accessToken}}
 content-type: application/json
 
