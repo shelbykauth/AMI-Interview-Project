@@ -49,7 +49,13 @@ export class TemperatureChartDirective {
   populated = effect(() => {
     let chart = this.chart();
     let data = this.weatherData();
-    this.populateChart(chart, data);
+    try {
+      // Heisen Bug.  If not in try/catch, breaks rest of site when this breaks.
+      // "Can't read [property] of undefined in Chartjs"
+      this.populateChart(chart, data);
+    } catch (err) {
+      console.error(err);
+    }
   });
 
   buildChart(canvas: HTMLCanvasElement) {
@@ -89,6 +95,8 @@ export class TemperatureChartDirective {
       label: item.city + ', ' + item.state + ' avg',
       data: [item.rolling12MonthAvg!],
     }));
+
+    console.log(chartData);
 
     chart.data.datasets = chartData;
     chart.resize();
