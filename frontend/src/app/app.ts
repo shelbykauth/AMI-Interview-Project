@@ -23,10 +23,27 @@ export class App {
   protected readonly refresh$ = new BehaviorSubject<void>(undefined);
 
   protected readonly unitOfMeasure = 'F';
-  protected readonly weatherCities = toSignal(
+  protected readonly weatherCitiesRaw = toSignal(
     this.refresh$.pipe(switchMap(() => this.weatherService.getAllData())),
     { initialValue: [] }
   );
+
+  protected readonly weatherCities = computed(() => {
+    let cards = this.weatherCitiesRaw();
+    if (typeof cards === 'string') {
+      return [];
+    } else {
+      return cards;
+    }
+  });
+  protected readonly generalErrorMessage = computed(() => {
+    let errorMessage = this.weatherCitiesRaw();
+    if (typeof errorMessage === 'string') {
+      return errorMessage;
+    } else {
+      return null;
+    }
+  });
 
   protected readonly formControls = new FormGroup({
     id: new FormControl('', { nonNullable: true }),

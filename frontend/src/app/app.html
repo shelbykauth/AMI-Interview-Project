@@ -39,7 +39,9 @@
 </div>
 <hr />
 <div class="flex flex-wrap m-6 justify-center">
-  @for (card of weatherCities(); track card.id) {
+  @if(generalErrorMessage()) {
+  <span class="text-3xl text-red-800">{{ generalErrorMessage() }}</span>
+  } @for (card of weatherCities(); track card.id) {
   <div app-weather-card [weatherState]="card"></div>
   }
   <div class="mx-1 w-sm"></div>

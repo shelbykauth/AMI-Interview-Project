@@ -3,7 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { getMockData } from './weather.mock-data';
 import { LocationInfo, WeatherState } from './types';
 import { LocationsService } from './locations';
-import { startWith, switchMap, tap } from 'rxjs';
+import { catchError, of, startWith, switchMap, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
 export function takeAverage(arr: number[]) {
@@ -45,7 +45,13 @@ export class WeatherService {
     let locations = this.locationsService.locations$;
     return locations.pipe(
       switchMap((locationInfo) =>
-        this.getData(locationInfo).pipe(startWith(this.getLoadingData(locationInfo)))
+        this.getData(locationInfo).pipe(
+          catchError((err, caught) => {
+            console.log(err);
+            return of('Error: Request for Data Failed');
+          }),
+          startWith(this.getLoadingData(locationInfo))
+        )
       )
     );
   }
